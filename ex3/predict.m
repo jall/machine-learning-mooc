@@ -7,8 +7,8 @@ function p = predict(Theta1, Theta2, X)
 m = size(X, 1);
 num_labels = size(Theta2, 1);
 
-A_1 = [ones(m, 1) X];
-A_2 = [ones(1, m); sigmoid(Theta1 * A_1')];
+A_1 = [ones(1, m); X'];
+A_2 = [ones(1, m); sigmoid(Theta1 * A_1)];
 A_3 = sigmoid(Theta2 * A_2);
 
 [highestClassifierProbability, indicesOfBestMatch] = max(A_3, [], 1);
