@@ -51,7 +51,9 @@ for i = 1:m
 endfor
 unregularisedCost *= (1 / m);
 
-J = unregularisedCost;
+regularisationCost = (lambda / (2 * m)) * (elementWiseSumOfSquares(Theta1(:, 2:end)) + elementWiseSumOfSquares(Theta2(:, 2:end)));
+
+J = unregularisedCost + regularisationCost;
 
 %
 % Part 2: Implement the backpropagation algorithm to compute the gradients
@@ -114,5 +116,13 @@ function v = toUnitColumnVector(idx, len)
 
 v = zeros(len, 1);
 v(idx) = 1;
+
+end
+
+
+function total = elementWiseSumOfSquares(X)
+
+X_squared = X .^ 2;
+total = sum(X_squared(:));
 
 end
