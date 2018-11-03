@@ -40,7 +40,16 @@ Theta2_grad = zeros(size(Theta2));
 %         cost function computation is correct by verifying the cost
 %         computed in ex4.m
 
-H = feedForward(X, Theta1, Theta2, num_labels);
+m = size(X, 1);
+
+% Feed forward
+A_1 = [ones(1, m); X'];
+Z_2 = Theta1 * A_1;
+A_2 = [ones(1, m); sigmoid(Z_2)];
+Z_3 = Theta2 * A_2;
+A_3 = sigmoid(Z_3);
+
+H = A_3;
 
 unregularisedCost = 0;
 for i = 1:m
@@ -70,7 +79,22 @@ J = unregularisedCost + regularisationCost;
 %               over the training examples if you are implementing it for the
 %               first time.
 
+for t = 1:m
+  a_1 = A_1(:, t);
+  a_2 = A_2(:, t);
+  a_3 = A_3(:, t);
 
+  z_2 = Z_2(:, t);
+
+  delta_3 = a_3 - y(:, t);
+  delta_2 = (Theta2' * delta_3) .* a_2 .* (1 - a_2);
+
+  Theta2_grad += delta_3 * a_2';
+  Theta1_grad += delta_2(2:end) * a_1';
+endfor
+
+Theta2_grad /= m;
+Theta1_grad /= m;
 
 % Part 3: Implement regularization with the cost function and gradients.
 %
@@ -87,19 +111,6 @@ J = unregularisedCost + regularisationCost;
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
-
-end
-
-
-function H = feedForward(X, Theta1, Theta2, num_labels)
-
-m = size(X, 1);
-
-A_1 = [ones(1, m); X'];
-A_2 = [ones(1, m); sigmoid(Theta1 * A_1)];
-A_3 = sigmoid(Theta2 * A_2);
-
-H = A_3;
 
 end
 
