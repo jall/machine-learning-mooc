@@ -55,7 +55,6 @@ regularisationCost = (lambda / (2 * m)) * (elementWiseSumOfSquares(Theta1(:, 2:e
 
 J = unregularisedCost + regularisationCost;
 
-%
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of
 %         the cost function with respect to Theta1 and Theta2 in Theta1_grad and
@@ -70,7 +69,9 @@ J = unregularisedCost + regularisationCost;
 %         Hint: We recommend implementing backpropagation using a for-loop
 %               over the training examples if you are implementing it for the
 %               first time.
-%
+
+
+
 % Part 3: Implement regularization with the cost function and gradients.
 %
 %         Hint: You can implement this around the code for
@@ -105,7 +106,7 @@ end
 
 function A = convertToUnitColumnVectors(X, column_vector_length)
 
-A_but_1D = cell2mat(arrayfun(@(x) toUnitVector(x, column_vector_length), X, "UniformOutput", false));
+A_but_1D = cell2mat(arrayfun(@(x) toUnitColumnVector(x, column_vector_length), X, "UniformOutput", false));
 [width, height] = size(A_but_1D);
 A = reshape(A_but_1D(:)(:), width, height);
 
