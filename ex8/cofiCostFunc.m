@@ -12,7 +12,9 @@ Theta = reshape(params(num_movies*num_features+1:end), ...
                 num_users, num_features);
 
 unregularised_cost = (1/2) * sum(sum(((X * Theta' - Y) .^ 2) .* R));
-J = unregularised_cost;
+theta_regularisation = (lambda / 2) * sum(sum(Theta .^ 2));
+x_regularisation = (lambda / 2) * sum(sum(X .^ 2));
+J = unregularised_cost + theta_regularisation + x_regularisation;
 
 for i = 1:num_movies
   idx = find(R(i, :) == 1);
