@@ -22,7 +22,7 @@ for i = 1:num_movies
   Y_i =  Y(i, idx);
   X_i = X(i, :);
   X_grad_row = (X_i * Theta_i' - Y_i) * Theta_i;
-  X_grad(i, :) = X_grad_row';
+  X_grad(i, :) = X_grad_row' + (lambda * X_i');
 endfor
 
 for j = 1:num_users
@@ -31,7 +31,7 @@ for j = 1:num_users
   Y_j =  Y(idx, j);
   X_j = X(idx, :);
   Theta_grad_row =  X_j' * (X_j * Theta_j' - Y_j);
-  Theta_grad(j, :) = Theta_grad_row';
+  Theta_grad(j, :) = Theta_grad_row' + (lambda * Theta_j);
 endfor
 
 grad = [X_grad(:); Theta_grad(:)];
